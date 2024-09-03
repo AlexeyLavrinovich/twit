@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  liquibase:
+    changelog: ${LIQUIBASE_CHANGE_LOG:classpath:db/changelog/changelog-dev.xml}
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/twitter
+    username: user
+    password: pass
+
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+        ddl-auto: update
+
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+      health:
+        show-details: always
