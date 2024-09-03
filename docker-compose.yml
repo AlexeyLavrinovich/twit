@@ -1,0 +1,24 @@
+#volumes:
+#  db-twit:
+
+services:
+  twitter-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=twitter
+#    volumes:
+#      - db-twit:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  app:
+    build: ./twit/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - twitter-db
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://twitter-db:5432/twitter'
+      JAVA_OPTS: 'Xmx1024m'
